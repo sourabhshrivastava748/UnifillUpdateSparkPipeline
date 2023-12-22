@@ -5,18 +5,18 @@ object UpdatePipelineRunner {
 
     def main(args: Array[String]) = {
         /*
-        Compile:
-            sbt test package
+            Compile:
+                sbt test package
 
-        Command to run pipeline:
-            /spark/bin/spark-submit \
-               --conf spark.pipeline.fromInclusiveDate="2023-08-01 00:00:00" \
-               --conf spark.pipeline.tillExclusiveDate="2023-09-01 00:00:00" \
-               --master yarn \
-               target/scala-2.12/unifillupdatesparkpipeline*.jar
+            Run pipeline:
+                /spark/bin/spark-submit \
+                   --conf spark.pipeline.fromInclusiveDate="2023-08-01 00:00:00" \
+                   --conf spark.pipeline.tillExclusiveDate="2023-09-01 00:00:00" \
+                   --master yarn \
+                   target/scala-2.12/unifillupdatesparkpipeline*.jar
          */
 
-        val log = LogManager.getRootLogger
+        val log = LogManager.getLogger(this.getClass.getName)
         val sparkSession = SessionManager.createSession()
         val fromInclusiveDate: String = sparkSession.sparkContext.getConf.get("spark.pipeline.fromInclusiveDate")
         val tillExclusiveDate: String = sparkSession.sparkContext.getConf.get("spark.pipeline.tillExclusiveDate")
@@ -26,7 +26,8 @@ object UpdatePipelineRunner {
         log.info("tillExclusiveDate: " + tillExclusiveDate)
 
         /*
-            Check from date and to date
+            Check from date and to date - DONE
+
 
          */
 
