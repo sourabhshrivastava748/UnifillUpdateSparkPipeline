@@ -10,16 +10,16 @@ object UpdatePipelineRunner {
 
         Command to run pipeline:
             /spark/bin/spark-submit \
-               --conf fromInclusiveDate="2023-08-01 00:00:00"
-               --conf tillExclusiveDate="2023-09-01 00:00:00"
-               --master yarn
-               target/scala-2.12/updatepipelinerunner*.jar
+               --conf spark.pipeline.fromInclusiveDate="2023-08-01 00:00:00" \
+               --conf spark.pipeline.tillExclusiveDate="2023-09-01 00:00:00" \
+               --master yarn \
+               target/scala-2.12/unifillupdatesparkpipeline*.jar
          */
 
         val log = LogManager.getRootLogger
         val sparkSession = SessionManager.createSession()
-        val fromInclusiveDate: String = sparkSession.sparkContext.getConf.get("fromInclusiveDate")
-        val tillExclusiveDate: String = sparkSession.sparkContext.getConf.get("tillExclusiveDate")
+        val fromInclusiveDate: String = sparkSession.sparkContext.getConf.get("spark.pipeline.fromInclusiveDate")
+        val tillExclusiveDate: String = sparkSession.sparkContext.getConf.get("spark.pipeline.tillExclusiveDate")
 
         log.info("Unifill Update Spark Pipeline")
         log.info("fromInclusiveDate: " + fromInclusiveDate)
