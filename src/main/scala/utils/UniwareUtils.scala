@@ -17,7 +17,7 @@ object UniwareUtils {
             "database" -> "uniwareConfig",
             "collection" -> "serverDetails"
         )
-        val stage = "[ {'$match': {'production': 'true', 'active': 'true'}}, {'$project': {'replicatedTo': '$replicatedTo'}} ]"
+        val stage = "[ {'$match': {'production': 'true', 'active': 'true'}}, {'$project': {'db': '$db'}} ]"
 
         try{
             val prodServersDf = sparkSession.read
@@ -27,7 +27,7 @@ object UniwareUtils {
                     .load()
             import sparkSession.implicits._
             log.info("Prod Servers Count: " + prodServersDf.count)
-            prodServersDf.select("replicatedTo").as[String].collect().toSet
+            prodServersDf.select("db").as[String].collect().toSet
         } catch {
             case ex: Exception => {
                 log.error("Exception occurred while reading prod db server from mongo")
