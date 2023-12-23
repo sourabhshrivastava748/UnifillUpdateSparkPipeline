@@ -22,7 +22,7 @@ object UpdatePipelineRunner {
     def readTransformWriteInParallel(): Unit = {
         val prodDbServerSet = UniwareUtils.getProdServers(sparkSession).diff(excludeServers)
         log.info("Prod server count: " + prodDbServerSet.size)
-        log.info("Prod servers: " + prodDbServerSet)
+        // log.info("Prod servers: " + prodDbServerSet)
         readTransformWrite("db.ecloud1-in.unicommerce.infra")
 
 

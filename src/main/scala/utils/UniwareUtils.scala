@@ -42,7 +42,6 @@ object UniwareUtils {
     }
 
     def getUniwareShippingPackageAddressQuery(fromInclusiveDate: String, tillExclusiveDate: String): String = {
-        // TODO :: Check if for every server, address_detail has district column
         """SELECT
           |       ad.phone                          AS mobile,
           |       tenant.code                       AS tenant_code,
@@ -52,7 +51,7 @@ object UniwareUtils {
           |       sp.shipping_courier               AS shipping_courier,
           |       so.payment_method_code            AS payment_method,
           |       sum(ii.total)                     AS gmv,
-          |       CAST(sum(ii.quantity) AS SIGNED)  AS quantity
+          |       sum(ii.quantity)                  AS quantity
           |FROM   shipping_package sp
           |        STRAIGHT_JOIN address_detail ad
           |            ON ad.id = sp.shipping_address_id
