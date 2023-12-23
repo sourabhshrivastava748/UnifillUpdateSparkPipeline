@@ -23,7 +23,7 @@ object UpdatePipelineRunner {
         val prodDbServerSet = UniwareUtils.getProdServers(sparkSession).diff(excludeServers)
         log.info("Prod server count: " + prodDbServerSet.size)
         log.info("Prod servers: " + prodDbServerSet)
-//        readTransformWrite(servername)
+        readTransformWrite("db.ecloud1-in.unicommerce.infra")
 
 
 //        val listThreads: ListBuffer[Thread] = ListBuffer[Thread]()
