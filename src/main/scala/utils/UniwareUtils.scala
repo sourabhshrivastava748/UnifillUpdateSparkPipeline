@@ -15,7 +15,7 @@ object UniwareUtils {
         )
 
         val dataFrame = sparkSession.read
-                .format("com.mongodb.spark.sql.DefaultSource")
+                .format("mongodb")
                 .options(mongodbOptions)
                 .load()
 
