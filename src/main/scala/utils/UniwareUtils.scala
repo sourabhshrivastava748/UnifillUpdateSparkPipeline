@@ -72,11 +72,11 @@ object UniwareUtils {
           |       AND
           |        tenant.code NOT IN ('lenskart91', 'lenskartcom77', 'lenskartcom97','myntracom70','myntracom73')
           |       AND
-          |        sp.created >=""".stripMargin + fromInclusiveDate +
-        """
+          |        sp.created >= '""".stripMargin + fromInclusiveDate +
+        """'
           |       AND
-          |        sp.created <""".stripMargin + tillExclusiveDate +
-        """
+          |        sp.created < '""".stripMargin + tillExclusiveDate +
+        """'
           |       AND
           |        ad.country_code = "IN"
           |       AND
