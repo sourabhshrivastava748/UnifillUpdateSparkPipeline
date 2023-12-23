@@ -19,6 +19,7 @@ object UniwareUtils {
                 .options(mongodbOptions)
                 .load()
 
+        log.info("Prod Servers")
         dataFrame.show(false)
         Set()
     }
