@@ -13,21 +13,17 @@ object UniwareUtils {
             "database" -> "uniwareConfig",
             "collection" -> "serverDetails"
         )
-
-//        val stage1 = "{'$match': {'production': 'true', 'active': 'true'}}"
-//        val stage2 = "{'$project': {'db': '$db'}}"
-
         val stage = "[ {'$match': {'production': 'true', 'active': 'true'}}, {'$project': {'db': '$db'}} ]"
 
-        val dataFrame = sparkSession.read
+        val prodServersDf = sparkSession.read
                 .format("com.mongodb.spark.sql.DefaultSource")
                 .options(mongodbOptions)
                 .option("pipeline", stage)
                 .load()
 
-        log.info("Prod Servers Count: " + dataFrame.count)
-        dataFrame.show(false)
-        Set()
+        import sparkSession.implicits._
+        log.info("Prod Servers Count: " + prodServersDf.count)
+        prodServersDf.select("db").as[String].collect().toSet
     }
 
 }
