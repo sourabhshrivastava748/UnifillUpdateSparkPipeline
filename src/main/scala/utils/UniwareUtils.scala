@@ -9,13 +9,13 @@ object UniwareUtils {
     def getProdServers(sparkSession: SparkSession, uniwareCommonMongoDbUri: String): Set[String] = {
         log.info("Getting prod server list")
         val mongodbOptions = Map(
-            "spark.mongodb.read.connection.uri" -> uniwareCommonMongoDbUri,
+            "spark.mongodb.input.uri" -> uniwareCommonMongoDbUri,
             "database" -> "uniwareConfig",
             "collection" -> "serverDetails"
         )
 
         val dataFrame = sparkSession.read
-                .format("mongodb")
+                .format("com.mongodb.spark.sql.DefaultSource")
                 .options(mongodbOptions)
                 .load()
 
