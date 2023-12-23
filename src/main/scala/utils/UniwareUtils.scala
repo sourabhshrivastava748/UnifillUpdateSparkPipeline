@@ -7,7 +7,6 @@ object UniwareUtils {
     val log = LogManager.getLogger(this.getClass.getName)
 
     def getProdServers(sparkSession: SparkSession, uniwareCommonMongoDbUri: String): Set[String] = {
-        log.info("uniwareCommonMongoDbUri: " + uniwareCommonMongoDbUri)
         log.info("Getting prod server list")
         val mongodbOptions = Map(
             "spark.mongodb.input.uri" -> uniwareCommonMongoDbUri,

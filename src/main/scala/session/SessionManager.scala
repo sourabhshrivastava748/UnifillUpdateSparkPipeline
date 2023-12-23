@@ -18,7 +18,6 @@ object SessionManager {
 
         sparkSession.sparkContext.setLocalProperty("spark.scheduler.pool", "production-fair")
         sparkSession.sparkContext.setLocalProperty("spark.scheduler.allocation.file", "file:///spark/fair.xml")
-        log.info("Created ")
         sparkSession
     }
 
