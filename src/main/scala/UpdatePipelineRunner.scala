@@ -1,36 +1,58 @@
+import entity.UniwareShippingPackage
 import org.apache.log4j.LogManager
 import org.apache.spark.SparkConf
+import org.apache.spark.sql.Dataset
 import session.SessionManager
 import utils.UniwareUtils
+
+import scala.collection.mutable.ListBuffer
 
 object UpdatePipelineRunner {
 
     val log = LogManager.getLogger(this.getClass.getName)
     val sparkSession = SessionManager.createSession()
-    val sparkConf: SparkConf = sparkSession.sparkContext.getConf
-
-    val fromInclusiveDate: String = sparkConf.get("spark.pipeline.fromInclusiveDate")
-    val tillExclusiveDate: String = sparkConf.get("spark.pipeline.tillExclusiveDate")
-    val uniwareCommonMongoDbUri: String = sparkConf.get("spark.uniware.common.mongodb.uri")
 
     val excludeServers: Set[String] = Set("db.myntra-in.unicommerce.infra", "db.lenskart-in.unicommerce.infra", "db.lenskartmp-in.unicommerce.infra", "db.ril-in.unicommerce.infra")
 
+    def readTransformWrite(serverName: String): Unit = {
+        val shippingPackageAddressDataset: Dataset[UniwareShippingPackage] = UniwareUtils.readUniwareJDBC(sparkSession, serverName)
+        shippingPackageAddressDataset.show(false)
+    }
 
     def readTransformWriteInParallel(): Unit = {
-        val prodServerSet = UniwareUtils
-                .getProdServers(sparkSession, uniwareCommonMongoDbUri)
-                .diff(excludeServers)
+        val prodDbServerSet = UniwareUtils.getProdServers(sparkSession).diff(excludeServers)
+        log.info("Prod db replica servers count: " + prodDbServerSet.size)
+        log.info("Replicas: " + prodDbServerSet)
+//        readTransformWrite(servername)
 
-        log.info("Prod server count: " + prodServerSet.size)
-        log.info("Prod servers:: " + prodServerSet)
 
+//        val listThreads: ListBuffer[Thread] = ListBuffer[Thread]()
+//        for (servername: String <- prodDbServerSet) {
+//            val thread = new Thread {
+//                override
+//                def run: Unit = readTransformWrite(servername)
+//            }
+//            thread.start()
+//            listThreads.append(thread)
+//        }
+//
+//        for (thread <- listThreads) {
+//            thread.join()
+//        }
     }
 
     def main(args: Array[String]) = {
         log.info("Unifill Update Spark Pipeline")
-        log.info("fromInclusiveDate: " + fromInclusiveDate)
-        log.info("tillExclusiveDate: " + tillExclusiveDate)
 
         readTransformWriteInParallel()
+        /*
+            readUniwareJDBC
+                - fetch query
+                - read in spark, display output
+                - update query
+                - spark update test
+                - bulk update query
+                - mysql tuning
+         */
     }
 }
