@@ -43,7 +43,7 @@ object UniwareUtils {
 
     def getUniwareShippingPackageAddressQuery(fromInclusiveDate: String, tillExclusiveDate: String): String = {
         // TODO :: Check if for every server, address_detail has district column
-        """(SELECT
+        """SELECT
           |       ad.phone                          AS mobile,
           |       tenant.code                       AS tenant_code,
           |       party.code                        AS facility_code,
@@ -83,7 +83,7 @@ object UniwareUtils {
           |        ad.phone NOT LIKE '*%'
           |       AND
           |        ad.phone NOT IN ('9999999999', '0000000000', '8888888888', '1111111111', '9898989898', '0123456789', '1234567890', '0987654321', '09999999999')
-          |   GROUP BY sp.code) as foo""".stripMargin
+          |   GROUP BY sp.code""".stripMargin
     }
 
     /**
