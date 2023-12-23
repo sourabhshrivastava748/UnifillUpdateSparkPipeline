@@ -1,8 +1,11 @@
 package session
 
+import org.apache.log4j.LogManager
 import org.apache.spark.sql.SparkSession
 
 object SessionManager {
+
+    val log = LogManager.getLogger(this.getClass.getName)
 
     def createSession(): SparkSession = {
         val sparkSession = SparkSession.builder
@@ -15,6 +18,7 @@ object SessionManager {
 
         sparkSession.sparkContext.setLocalProperty("spark.scheduler.pool", "production-fair")
         sparkSession.sparkContext.setLocalProperty("spark.scheduler.allocation.file", "file:///spark/fair.xml")
+        log.info("Created ")
         sparkSession
     }
 
