@@ -51,7 +51,7 @@ object UniwareUtils {
           |       sp.shipping_courier               AS shipping_courier,
           |       so.payment_method_code            AS payment_method,
           |       sum(ii.total)                     AS gmv,
-          |       CAST(sum(ii.quantity) AS INT)     AS quantity
+          |       CAST(sum(ii.quantity) AS SIGNED)  AS quantity
           |FROM   shipping_package sp
           |        STRAIGHT_JOIN address_detail ad
           |            ON ad.id = sp.shipping_address_id
