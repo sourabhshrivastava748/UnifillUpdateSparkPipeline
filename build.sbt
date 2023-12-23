@@ -5,7 +5,7 @@ ThisBuild / scalaVersion := "2.12.15"
 
 libraryDependencies ++= Seq(
     "org.apache.spark" %% "spark-sql" % "3.5.0",
-    "org.mongodb.spark" %% "mongo-spark-connector_2.12" % "10.2.1",
+    "org.mongodb.spark" %% "mongo-spark-connector" % "10.2.1",
     "org.scalatest" %% "scalatest" % "3.2.15" % "test"
 )
 
