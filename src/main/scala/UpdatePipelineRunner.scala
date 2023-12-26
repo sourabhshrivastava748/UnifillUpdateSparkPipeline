@@ -15,7 +15,7 @@ object UpdatePipelineRunner {
 
     def readTransformWrite(serverName: String): Unit = {
         val shippingPackageAddressDataset: Dataset[UniwareShippingPackage] = UniwareUtils.readUniwareJDBC(sparkSession, serverName)
-        shippingPackageAddressDataset.show(false)
+        // shippingPackageAddressDataset.show(false)
         UnifillUtils.writeUnifillJDBC(sparkSession, shippingPackageAddressDataset);
     }
 
