@@ -19,7 +19,7 @@ object UnifillUtils {
         val start = System.currentTimeMillis()
         val sparkConf: SparkConf = sparkSession.sparkContext.getConf
         val jdbcOptions = Map(
-            "url" -> sparkConf.get("spark.unifill.mysqldb.url"),
+            "url" -> sparkConf.get("spark.unifill.mysqldb.url") + "?useSSL=false&useServerPrepStmts=false&rewriteBatchedStatements=true&enabledTLSProtocols=TLSv1.3",
             "user" -> sparkConf.get("spark.unifill.mysqldb.user"),
             "password" -> sparkConf.get("spark.unifill.mysqldb.password"),
             "driver" -> sparkConf.get("spark.unifill.mysqldb.driver"),
