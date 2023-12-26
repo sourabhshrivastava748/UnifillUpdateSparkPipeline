@@ -4,6 +4,8 @@ import org.apache.spark.sql.Dataset
 import session.SessionManager
 import utils.{UnifillUtils, UniwareUtils}
 
+import scala.collection.mutable.ListBuffer
+
 object UpdatePipelineRunner {
 
     val log = LogManager.getLogger(this.getClass.getName)
@@ -21,22 +23,21 @@ object UpdatePipelineRunner {
         val prodDbServerSet = UniwareUtils.getProdServers(sparkSession).diff(excludeServers)
         log.info("Prod server count: " + prodDbServerSet.size)
         // log.info("Prod servers: " + prodDbServerSet)
-        readTransformWrite("db.ecloud1-in.unicommerce.infra")
+        // readTransformWrite("db.ecloud1-in.unicommerce.infra")
 
+        val listThreads: ListBuffer[Thread] = ListBuffer[Thread]()
+        for (servername: String <- prodDbServerSet) {
+            val thread = new Thread {
+                override
+                def run: Unit = readTransformWrite(servername)
+            }
+            thread.start()
+            listThreads.append(thread)
+        }
 
-//        val listThreads: ListBuffer[Thread] = ListBuffer[Thread]()
-//        for (servername: String <- prodDbServerSet) {
-//            val thread = new Thread {
-//                override
-//                def run: Unit = readTransformWrite(servername)
-//            }
-//            thread.start()
-//            listThreads.append(thread)
-//        }
-//
-//        for (thread <- listThreads) {
-//            thread.join()
-//        }
+        for (thread <- listThreads) {
+            thread.join()
+        }
     }
 
     def main(args: Array[String]) = {
