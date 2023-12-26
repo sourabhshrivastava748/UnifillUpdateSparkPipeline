@@ -1,11 +1,8 @@
 import entity.UniwareShippingPackage
 import org.apache.log4j.LogManager
-import org.apache.spark.SparkConf
 import org.apache.spark.sql.Dataset
 import session.SessionManager
 import utils.UniwareUtils
-
-import scala.collection.mutable.ListBuffer
 
 object UpdatePipelineRunner {
 
@@ -17,6 +14,7 @@ object UpdatePipelineRunner {
     def readTransformWrite(serverName: String): Unit = {
         val shippingPackageAddressDataset: Dataset[UniwareShippingPackage] = UniwareUtils.readUniwareJDBC(sparkSession, serverName)
         shippingPackageAddressDataset.show(false)
+
     }
 
     def readTransformWriteInParallel(): Unit = {

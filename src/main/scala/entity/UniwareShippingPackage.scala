@@ -1,7 +1,7 @@
 package entity
 
 case class UniwareShippingPackage(
-     mobile: String,
+     uniware_sp_created: String,
      tenant_code: String,
      facility_code: String,
      shipping_package_code: String,

@@ -43,7 +43,7 @@ object UniwareUtils {
 
     def getUniwareShippingPackageAddressQuery(fromInclusiveDate: String, tillExclusiveDate: String): String = {
         """SELECT
-          |       ad.phone                          AS mobile,
+          |       sp.created                        AS uniware_sp_created,
           |       tenant.code                       AS tenant_code,
           |       party.code                        AS facility_code,
           |       sp.code                           AS shipping_package_code,
