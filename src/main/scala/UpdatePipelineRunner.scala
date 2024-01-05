@@ -42,16 +42,6 @@ object UpdatePipelineRunner {
 
     def main(args: Array[String]) = {
         log.info("Unifill Update Spark Pipeline")
-
         readTransformWriteInParallel()
-        /*
-            readUniwareJDBC
-                - fetch query
-                - read in spark, display output
-                - update query
-                - spark update test
-                - bulk update query
-                - mysql tuning
-         */
     }
 }
