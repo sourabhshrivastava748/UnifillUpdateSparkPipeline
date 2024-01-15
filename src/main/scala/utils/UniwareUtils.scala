@@ -10,7 +10,7 @@ object UniwareUtils {
     def containsShippingCourier(sparkSession: SparkSession, server: String): Boolean = {
         val sparkConf: SparkConf = sparkSession.sparkContext.getConf
         val query = "select COLUMN_NAME from information_schema.COLUMNS where TABLE_SCHEMA = 'uniware' " +
-                "and TABLE_NAME = 'shipping_package' and COLUMN_NAME = 'shipping_courier'"
+                "and TABLE_NAME = 'address_detail' and COLUMN_NAME = 'district'"
 
         val jdbcOptions = Map(
             "url" -> getJdbcUrlFromServerName(server),

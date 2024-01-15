@@ -33,8 +33,8 @@ object UpdatePipelineRunner {
         val prodDbServerSet = UniwareUtils.getProdServers(sparkSession)
         val prodServersWithNoShippingCourier = getProdServersWithNoShippingCourier(prodDbServerSet)
         log.info("Prod server count: " + prodDbServerSet.size)
-        log.info("Prod server count with no shipping courier: " + prodServersWithNoShippingCourier.size)
-        log.info("Prod server with no shipping courier: " + prodServersWithNoShippingCourier.mkString("[",",","]"))
+        log.info("Prod server count with no district in address_detail: " + prodServersWithNoShippingCourier.size)
+        log.info("Prod server with no district in address_detail: " + prodServersWithNoShippingCourier.mkString("[",",","]"))
         // log.info("Prod servers: " + prodDbServerSet)
         // readTransformWrite("db.ecloud1-in.unicommerce.infra")
 
