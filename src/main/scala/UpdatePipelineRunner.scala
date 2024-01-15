@@ -1,10 +1,8 @@
 import entity.UniwareShippingPackage
 import org.apache.log4j.LogManager
-import org.apache.spark.sql.{Dataset, SparkSession}
+import org.apache.spark.sql.Dataset
 import session.SessionManager
 import utils.{UnifillUtils, UniwareUtils}
-
-import scala.collection.mutable.ListBuffer
 
 object UpdatePipelineRunner {
 
@@ -21,7 +19,7 @@ object UpdatePipelineRunner {
 
 
     def getProdServersWithNoShippingCourier(prodDbServerSet: Set[String]) = {
-        var prodDbServerSetWithNoShippingCourier = Set()
+        var prodDbServerSetWithNoShippingCourier: Set[String] = Set()
         for (server <- prodDbServerSet) {
             if (!UniwareUtils.containsShippingCourier(sparkSession, server)) {
                 prodDbServerSetWithNoShippingCourier += server
