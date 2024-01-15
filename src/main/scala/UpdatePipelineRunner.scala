@@ -30,7 +30,7 @@ object UpdatePipelineRunner {
 
     def readTransformWriteInParallel(): Unit = {
         // val prodDbServerSet = UniwareUtils.getProdServers(sparkSession).diff(excludeServers)
-        val prodDbServerSet = UniwareUtils.getProdServers(sparkSession).diff(excludeServers)
+        val prodDbServerSet = UniwareUtils.getProdServers(sparkSession)
         val prodServersWithNoShippingCourier = getProdServersWithNoShippingCourier(prodDbServerSet)
         log.info("Prod server count: " + prodDbServerSet.size)
         log.info("Prod server count with no shipping courier: " + prodServersWithNoShippingCourier.size)
