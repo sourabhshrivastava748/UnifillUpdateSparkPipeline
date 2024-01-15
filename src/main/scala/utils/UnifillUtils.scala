@@ -7,6 +7,7 @@ import utils.UniwareUtils.{getJdbcUrlFromServerName, log}
 
 object UnifillUtils {
 
+
     def getUnifillJdbcUrlFromUrl(url: String): String = {
         url + "?useSSL=false&useServerPrepStmts=false&rewriteBatchedStatements=true&enabledTLSProtocols=TLSv1.3"
     }

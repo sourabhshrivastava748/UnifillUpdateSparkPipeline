@@ -7,6 +7,32 @@ import org.apache.spark.sql.{Dataset, SparkSession}
 
 object UniwareUtils {
 
+    def containsShippingCourier(sparkSession: SparkSession, server: String): Boolean = {
+        val sparkConf: SparkConf = sparkSession.sparkContext.getConf
+        val query = "select COLUMN_NAME from information_schema.COLUMNS where TABLE_SCHEMA = 'uniware' " +
+                "and TABLE_NAME = 'shipping_package' and COLUMN_NAME = 'shipping_courier'"
+
+        val jdbcOptions = Map(
+            "url" -> getJdbcUrlFromServerName(server),
+            "user" -> sparkConf.get("spark.uniware.mysqldb.user"),
+            "password" -> sparkConf.get("spark.uniware.mysqldb.password"),
+            "driver" -> sparkConf.get("spark.uniware.mysqldb.driver"),
+            "query" -> query,
+            "header" -> "true",
+            "inferSchema" -> "true",
+            "mode" -> "failfast",
+            "fetchSize" -> sparkConf.get("spark.uniware.mysqldb.fetchSize"),
+        )
+        val dataset = sparkSession.read
+                .format("jdbc")
+                .options(jdbcOptions)
+                .load()
+
+        dataset.show(false)
+        dataset.count() > 0
+    }
+
+
     val log = LogManager.getLogger(this.getClass.getName)
 
     def getProdServers(sparkSession: SparkSession): Set[String] = {
@@ -123,5 +149,7 @@ object UniwareUtils {
 
         uniwareShippingPackageAddressDataset
     }
+
+
 
 }
